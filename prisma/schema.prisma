@@ -14,3 +14,27 @@ model Todo {
   completed   Boolean? @default(false)
   user        String
 }
+
+model ObservedRepo {
+  id                String             @id @unique @default(uuid())
+  url               String?
+  owner             String?
+  name              String?
+  pullRequests      Int?
+  openIssues        Int?
+  license           String?
+  createdAt         DateTime?          @default(now())
+  deletedAt         DateTime?
+  updatedAt         DateTime?          @updatedAt
+  scheduledObserver ScheduledObserver?
+}
+
+model ScheduledObserver {
+  id           String        @id @unique @default(uuid())
+  repoId       String?       @unique
+  lastRun      DateTime?
+  observedRepo ObservedRepo? @relation(fields: [repoId], references: [id], onDelete: Cascade)
+  createdAt    DateTime?     @default(now())
+  deletedAt    DateTime?
+  updatedAt    DateTime?     @updatedAt
+}
