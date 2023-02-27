@@ -8,6 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ObservedRepo } from '@prisma/client';
+import { CreateObservedRepoDto } from '../dto/create-observed-repo.dto';
 import { ObservedReposService } from '../service/observed-repos.service';
 
 @Controller('api/v1/observed-repos')
@@ -20,7 +21,9 @@ export class ObservedReposController {
   }
 
   @Post()
-  async createObservedRepo(@Body() body: ObservedRepo): Promise<ObservedRepo> {
+  async createObservedRepo(
+    @Body() body: CreateObservedRepoDto,
+  ): Promise<ObservedRepo> {
     return this.observedRepoService.createObservedRepo(body);
   }
 

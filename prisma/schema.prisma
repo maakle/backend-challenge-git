@@ -10,7 +10,7 @@ datasource db {
 model ObservedRepo {
   id           String    @id @unique @default(uuid())
   url          String?
-  status       String?
+  status       String?   @default("ACTIVE")
   owner        String?
   name         String?
   pullRequests Int?

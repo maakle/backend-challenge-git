@@ -4,7 +4,7 @@ import { Octokit } from 'octokit';
 @Injectable()
 export class FetcherService {
   private readonly octokit = new Octokit({
-    auth: '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',
+    auth: '',
   });
 
   async getGithubRepo(owner: string, name: string) {

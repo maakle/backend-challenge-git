@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ObservedRepo } from '@prisma/client';
 import { PrismaService } from '../../prisma.service';
+import { CreateObservedRepoDto } from '../dto/create-observed-repo.dto';
 
 @Injectable()
 export class ObservedReposService {
@@ -14,9 +15,13 @@ export class ObservedReposService {
     return this.prisma.observedRepo.findUnique({ where: { id } });
   }
 
-  async createObservedRepo(data: ObservedRepo): Promise<ObservedRepo> {
+  async createObservedRepo(body: CreateObservedRepoDto): Promise<ObservedRepo> {
+    const urlSegments = body.url.split('/');
+    const owner = urlSegments[1];
+    const name = urlSegments[2];
+
     return this.prisma.observedRepo.create({
-      data,
+      data: { url: body.url, owner, name },
     });
   }
 

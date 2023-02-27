@@ -15,11 +15,7 @@ export class CronService {
 
   async observeRepos() {
     // Step 1: Get all observed Repos
-
     // Step 2: Iterate over those & fetch details
-    const githubRepo = await this.fetchService.getGithubRepo('nestjs', 'nest');
-    console.log(githubRepo);
-
     // Step 3: map to local format
   }
 }
