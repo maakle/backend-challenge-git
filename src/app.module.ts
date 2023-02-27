@@ -4,10 +4,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ObservedReposModule } from './observed-repos/observed-repos.module';
 import { CronService } from './cron/cron.service';
+import { FetcherService } from './fetcher/fetcher.service';
 
 @Module({
   imports: [ObservedReposModule, ScheduleModule.forRoot()],
   controllers: [AppController],
-  providers: [AppService, CronService],
+  providers: [AppService, CronService, FetcherService],
 })
 export class AppModule {}
