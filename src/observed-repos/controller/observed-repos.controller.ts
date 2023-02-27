@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ObservedRepo } from '@prisma/client';
 import { CreateObservedRepoDto } from '../dto/create-observed-repo.dto';
+import { UpdateObservedRepoDto } from '../dto/update-observed-repo.dto';
 import { ObservedReposService } from '../service/observed-repos.service';
 
 @Controller('api/v1/observed-repos')
@@ -35,7 +36,7 @@ export class ObservedReposController {
   @Put(':id')
   async updateObservedRepo(
     @Param('id') id: string,
-    @Body() body: ObservedRepo,
+    @Body() body: UpdateObservedRepoDto,
   ): Promise<ObservedRepo> {
     return this.observedRepoService.updateObservedRepo(id, body);
   }

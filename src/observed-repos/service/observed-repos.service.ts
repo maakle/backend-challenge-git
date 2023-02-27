@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ObservedRepo } from '@prisma/client';
 import { PrismaService } from '../../prisma.service';
 import { CreateObservedRepoDto } from '../dto/create-observed-repo.dto';
+import { UpdateObservedRepoDto } from '../dto/update-observed-repo.dto';
 
 @Injectable()
 export class ObservedReposService {
@@ -27,11 +28,11 @@ export class ObservedReposService {
 
   async updateObservedRepo(
     id: string,
-    data: ObservedRepo,
+    body: UpdateObservedRepoDto,
   ): Promise<ObservedRepo> {
     return this.prisma.observedRepo.update({
       where: { id },
-      data: { ...data },
+      data: { ...body },
     });
   }
 

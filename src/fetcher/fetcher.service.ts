@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { Endpoints } from '@octokit/types';
 import { Octokit } from 'octokit';
+
+export type GetGithubRepoResponse =
+  Endpoints['GET /repos/{owner}/{repo}']['response']['data'];
 
 @Injectable()
 export class FetcherService {
@@ -7,7 +11,7 @@ export class FetcherService {
     auth: '',
   });
 
-  async fetchGithubRepo(owner: string, name: string) {
+  async getGithubRepo(owner: string, name: string) {
     return await this.octokit.request(`GET /repos/${owner}/${name}`, {
       owner: 'OWNER',
       repo: 'REPO',
