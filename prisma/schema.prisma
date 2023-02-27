@@ -17,6 +17,5 @@ model ObservedRepo {
   openIssues   Int?
   license      String?
   createdAt    DateTime? @default(now())
-  deletedAt    DateTime?
   updatedAt    DateTime? @updatedAt
 }

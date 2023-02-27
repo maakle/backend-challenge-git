@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ObservedReposModule } from './observed-repos/observed-repos.module';
-import { CronService } from './cron/cron.service';
+import { CronModule } from './cron/cron.module';
 import { FetcherService } from './fetcher/fetcher.service';
+import { ObservedReposModule } from './observed-repos/observed-repos.module';
 
 @Module({
-  imports: [ObservedReposModule, ScheduleModule.forRoot()],
+  imports: [ObservedReposModule, ScheduleModule.forRoot(), CronModule],
   controllers: [AppController],
-  providers: [AppService, CronService, FetcherService],
+  providers: [AppService, FetcherService],
 })
 export class AppModule {}

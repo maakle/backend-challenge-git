@@ -17,8 +17,8 @@ export class ObservedReposService {
 
   async createObservedRepo(body: CreateObservedRepoDto): Promise<ObservedRepo> {
     const urlSegments = body.url.split('/');
-    const owner = urlSegments[1];
-    const name = urlSegments[2];
+    const owner = urlSegments[3];
+    const name = urlSegments[4];
 
     return this.prisma.observedRepo.create({
       data: { url: body.url, owner, name },

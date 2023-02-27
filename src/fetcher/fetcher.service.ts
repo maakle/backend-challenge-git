@@ -7,7 +7,7 @@ export class FetcherService {
     auth: '',
   });
 
-  async getGithubRepo(owner: string, name: string) {
+  async fetchGithubRepo(owner: string, name: string) {
     return await this.octokit.request(`GET /repos/${owner}/${name}`, {
       owner: 'OWNER',
       repo: 'REPO',
