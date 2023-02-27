@@ -2,14 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { ObservedRepo } from '@prisma/client';
 import { PrismaService } from '../../prisma.service';
 import { CreateObservedRepoDto } from '../dto/create-observed-repo.dto';
+import { GetAllObservedReposDto } from '../dto/get-all-obersved-repos.dto';
 import { UpdateObservedRepoDto } from '../dto/update-observed-repo.dto';
 
 @Injectable()
 export class ObservedReposService {
   constructor(private prisma: PrismaService) {}
 
-  async getAllObservedRepos(): Promise<ObservedRepo[]> {
-    return this.prisma.observedRepo.findMany();
+  async getAllObservedRepos(
+    query: GetAllObservedReposDto,
+  ): Promise<ObservedRepo[]> {
+    return this.prisma.observedRepo.findMany({
+      where: {
+        ...query,
+      },
+    });
   }
 
   async getObservedRepo(id: string): Promise<ObservedRepo | null> {

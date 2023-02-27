@@ -6,9 +6,11 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ObservedRepo } from '@prisma/client';
 import { CreateObservedRepoDto } from '../dto/create-observed-repo.dto';
+import { GetAllObservedReposDto } from '../dto/get-all-obersved-repos.dto';
 import { UpdateObservedRepoDto } from '../dto/update-observed-repo.dto';
 import { ObservedReposService } from '../service/observed-repos.service';
 
@@ -17,8 +19,10 @@ export class ObservedReposController {
   constructor(private readonly observedRepoService: ObservedReposService) {}
 
   @Get()
-  async getAllObservedRepos(): Promise<ObservedRepo[]> {
-    return this.observedRepoService.getAllObservedRepos();
+  async getAllObservedRepos(
+    @Query() query: GetAllObservedReposDto,
+  ): Promise<ObservedRepo[]> {
+    return this.observedRepoService.getAllObservedRepos(query);
   }
 
   @Post()

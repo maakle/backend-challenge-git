@@ -23,8 +23,9 @@ export class CronService {
 
   async observeRepos() {
     // Step 1: Get all observed repos from db
-    const allObservedRepos =
-      await this.observedRepoService.getAllObservedRepos();
+    const allObservedRepos = await this.observedRepoService.getAllObservedRepos(
+      { status: 'ACTIVE' },
+    );
     this.logger.debug(`Fetched ${allObservedRepos.length} repos`);
 
     // Step 2: Iterate over all repos & fetch details for each
