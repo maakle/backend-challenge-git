@@ -7,14 +7,6 @@ datasource db {
   url      = "file:./db.sqlite"
 }
 
-model Todo {
-  id          String   @id @unique @default(uuid())
-  title       String
-  description String?
-  completed   Boolean? @default(false)
-  user        String
-}
-
 model ObservedRepo {
   id                String             @id @unique @default(uuid())
   url               String?
