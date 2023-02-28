@@ -9,11 +9,15 @@ import { ObservedReposService } from '../observed-repos/service/observed-repos.s
 
 @Injectable()
 export class CronService {
-  constructor(private prisma: PrismaService) {}
-
-  private readonly logger = new Logger(CronService.name);
-  private readonly fetchService = new FetcherService();
-  private readonly observedRepoService = new ObservedReposService(this.prisma);
+  constructor(
+    private readonly logger: Logger,
+    private readonly prisma: PrismaService,
+    private readonly fetchService: FetcherService,
+    private readonly observedRepoService: ObservedReposService,
+  ) {
+    observedRepoService = new ObservedReposService(this.prisma);
+    logger = new Logger(CronService.name);
+  }
 
   @Cron(CronExpression.EVERY_10_SECONDS)
   async handleCron() {

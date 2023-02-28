@@ -8,7 +8,7 @@ export type GetGithubRepoResponse =
 @Injectable()
 export class FetcherService {
   private readonly octokit = new Octokit({
-    auth: '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',
+    auth: process.env.GITHUB_API_KEY,
   });
 
   async getGithubRepo(owner: string, name: string) {
