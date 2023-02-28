@@ -12,11 +12,7 @@ export class ObservedReposService {
   async getAllObservedRepos(
     query: GetAllObservedReposDto,
   ): Promise<ObservedRepo[]> {
-    return this.prisma.observedRepo.findMany({
-      where: {
-        ...query,
-      },
-    });
+    return this.prisma.observedRepo.findMany({});
   }
 
   async getObservedRepo(id: string): Promise<ObservedRepo | null> {

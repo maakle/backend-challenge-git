@@ -21,7 +21,6 @@ export class CronService {
 
   @Cron(CronExpression.EVERY_10_SECONDS)
   async handleCron() {
-    this.logger.debug('Start fetching all observed repos');
     this.observeRepos();
   }
 
@@ -44,7 +43,7 @@ export class CronService {
       const mappedData = {
         stars: data.stargazers_count,
         openIssues: data.open_issues_count,
-        license: data.license.key,
+        license: data.license?.key ?? '',
       };
 
       // Step 4: Update db with new info
