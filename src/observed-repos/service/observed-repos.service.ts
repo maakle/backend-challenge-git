@@ -2,8 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { ObservedRepo } from '@prisma/client';
 import { PrismaService } from '../../prisma.service';
 import { CreateObservedRepoDto } from '../dto/create-observed-repo.dto';
-import { GetAllObservedReposDto } from '../dto/get-all-obersved-repos.dto';
+import {
+  GetAllObservedReposDto,
+  GetAllObservedReposResponse,
+} from '../dto/get-all-obersved-repos.dto';
 import { UpdateObservedRepoDto } from '../dto/update-observed-repo.dto';
+
+const PAGE_SIZE = 10;
+const SKIP = 1; // won't take provided cursor
 
 @Injectable()
 export class ObservedReposService {
@@ -11,11 +17,14 @@ export class ObservedReposService {
 
   async getAllObservedRepos(
     query: GetAllObservedReposDto,
-  ): Promise<ObservedRepo[]> {
-    // TODO: Add query paramenters here and make also pagination in case of more responses
-    const { status, skip, take, cursor, search } = query;
+  ): Promise<GetAllObservedReposResponse> {
+    const { status, after, before, search } = query;
 
-    return this.prisma.observedRepo.findMany({
+    const take = after ? PAGE_SIZE : before ? -PAGE_SIZE : PAGE_SIZE;
+    const cursor = after ? { id: after } : before ? { id: before } : undefined;
+    const skip = after || before ? SKIP : 0;
+
+    const results = await this.prisma.observedRepo.findMany({
       skip,
       take,
       cursor,
@@ -26,6 +35,15 @@ export class ObservedReposService {
         status: status,
       },
     });
+
+    const firstResult = results[0];
+    const lastResult = results[results.length - 1];
+
+    return {
+      previous: firstResult ? firstResult.id : null,
+      next: lastResult ? lastResult.id : null,
+      results: results,
+    }
   }
 
   async getObservedRepo(id: string): Promise<ObservedRepo | null> {

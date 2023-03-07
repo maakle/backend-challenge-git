@@ -10,7 +10,10 @@ import {
 } from '@nestjs/common';
 import { ObservedRepo } from '@prisma/client';
 import { CreateObservedRepoDto } from '../dto/create-observed-repo.dto';
-import { GetAllObservedReposDto } from '../dto/get-all-obersved-repos.dto';
+import {
+  GetAllObservedReposDto,
+  GetAllObservedReposResponse,
+} from '../dto/get-all-obersved-repos.dto';
 import { UpdateObservedRepoDto } from '../dto/update-observed-repo.dto';
 import { ObservedReposService } from '../service/observed-repos.service';
 
@@ -21,7 +24,7 @@ export class ObservedReposController {
   @Get()
   async getAllObservedRepos(
     @Query() query: GetAllObservedReposDto,
-  ): Promise<ObservedRepo[]> {
+  ): Promise<GetAllObservedReposResponse> {
     return this.observedRepoService.getAllObservedRepos(query);
   }
 
