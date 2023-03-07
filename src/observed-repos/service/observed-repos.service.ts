@@ -12,7 +12,15 @@ export class ObservedReposService {
   async getAllObservedRepos(
     query: GetAllObservedReposDto,
   ): Promise<ObservedRepo[]> {
-    return this.prisma.observedRepo.findMany({});
+    // TODO: Add query paramenters here and make also pagination in case of more responses
+    const { status, skip, take, cursor, where } = query;
+
+    return this.prisma.observedRepo.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+    });
   }
 
   async getObservedRepo(id: string): Promise<ObservedRepo | null> {
