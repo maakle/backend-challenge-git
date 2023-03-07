@@ -8,7 +8,7 @@ Then create an API endpoint where you can query the observed repos from our data
 
 ### Features implemented:
 
-- Create a CRON job that runs every X minutes and triggers a service that iterates over all `ScheduledObservedRepo`
+- Create a CRON job that runs every X minutes and triggers a service that iterates over all `ObservedRepo`
 - This service should then query the official Github API for the details of a specific public Repo
 - Map the response to our local `ObservedRepo`
 - Store the result in a database
