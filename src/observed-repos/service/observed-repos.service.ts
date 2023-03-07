@@ -13,13 +13,18 @@ export class ObservedReposService {
     query: GetAllObservedReposDto,
   ): Promise<ObservedRepo[]> {
     // TODO: Add query paramenters here and make also pagination in case of more responses
-    const { status, skip, take, cursor, where } = query;
+    const { status, skip, take, cursor, search } = query;
 
     return this.prisma.observedRepo.findMany({
       skip,
       take,
       cursor,
-      where,
+      where: {
+        name: {
+          contains: search,
+        },
+        status: status,
+      },
     });
   }
 

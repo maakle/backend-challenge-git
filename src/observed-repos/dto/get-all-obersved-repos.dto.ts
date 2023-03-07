@@ -27,5 +27,5 @@ export class GetAllObservedReposDto {
 
   @ApiProperty()
   @IsOptional()
-  where?: Prisma.ObservedRepoWhereInput;
+  search?: string;
 }
