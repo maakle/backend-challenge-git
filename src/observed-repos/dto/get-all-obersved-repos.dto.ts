@@ -1,7 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Prisma } from '@prisma/client';
-import { Type } from 'class-transformer';
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';;
+import { IsOptional, IsString } from 'class-validator';
+import { ObservedRepo } from '@prisma/client';
 
 export class GetAllObservedReposDto {
   @ApiProperty()
@@ -10,22 +9,29 @@ export class GetAllObservedReposDto {
   status?: string;
 
   @ApiProperty()
-  @IsInt()
   @IsOptional()
-  @Type(() => Number)
-  skip?: number;
-
-  @ApiProperty()
-  @IsInt()
-  @IsOptional()
-  @Type(() => Number)
-  take?: number;
+  after?: string;
 
   @ApiProperty()
   @IsOptional()
-  cursor?: Prisma.ObservedRepoWhereUniqueInput;
+  before?: string;
 
   @ApiProperty()
   @IsOptional()
-  where?: Prisma.ObservedRepoWhereInput;
+  search?: string;
+}
+
+
+export class GetAllObservedReposResponse {
+  @ApiProperty()
+  @IsOptional()
+  next?: string;
+
+  @ApiProperty()
+  @IsOptional()
+  previous?: string;
+
+  @ApiProperty()
+  @IsOptional()
+  results?: ObservedRepo[];
 }
