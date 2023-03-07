@@ -24,31 +24,40 @@ export class CronService {
     this.observeRepos();
   }
 
-  async observeRepos() {
+  async observeRepos(nextCursor?: string) {
     // Step 1: Get all observed repos from db
-    const allObservedRepos = await this.observedRepoService.getAllObservedRepos(
-      { status: 'ACTIVE' },
+    const { results, next } = await this.observedRepoService.getAllObservedRepos(
+      {
+        status: 'ACTIVE',
+        after: nextCursor,
+      },
     );
-    this.logger.debug(`Fetched ${allObservedRepos.length} repos`);
+    this.logger.debug(`Fetched ${results.length} repos`);
 
     // Step 2: Iterate over all repos & fetch details for each
-    allObservedRepos.map(async (repo) => {
-      const repoDetails = await this.fetchService.getGithubRepo(
-        repo.owner,
-        repo.name,
-      );
-      const data: GetGithubRepoResponse = repoDetails.data;
+    await Promise.all(
+      results.map(async (repo) => {
+        const repoDetails = await this.fetchService.getGithubRepo(
+          repo.owner,
+          repo.name,
+        );
+        const data: GetGithubRepoResponse = repoDetails.data;
 
-      // Step 3: Map to local format
-      const mappedData = {
-        stars: data.stargazers_count,
-        openIssues: data.open_issues_count,
-        license: data.license?.key ?? '',
-      };
+        // Step 3: Map to local format
+        const mappedData = {
+          stars: data.stargazers_count,
+          openIssues: data.open_issues_count,
+          license: data.license?.key ?? '',
+        };
 
-      // Step 4: Update db with new info
-      await this.observedRepoService.updateObservedRepo(repo.id, mappedData);
-      this.logger.debug(`Updated ${repo.id}`);
-    });
+        // Step 4: Update db with new info
+        await this.observedRepoService.updateObservedRepo(repo.id, mappedData);
+        this.logger.debug(`Updated ${repo.id}`);
+      })
+    );
+
+    if(next){
+      await this.observeRepos(next);
+    }
   }
 }

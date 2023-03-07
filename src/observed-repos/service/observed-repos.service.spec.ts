@@ -25,6 +25,10 @@ describe('ObservedReposService', () => {
     prisma.observedRepo.findMany = jest.fn().mockResolvedValue(repos);
 
     const observedRepos = await service.getAllObservedRepos({});
-    expect(observedRepos).toEqual(repos);
+    expect(observedRepos).toEqual({
+      results: repos,
+      next: 2,
+      previous: 1,
+    });
   });
 });
