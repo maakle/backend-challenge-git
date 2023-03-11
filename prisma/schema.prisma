@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model ObservedRepo {
+  id         String    @id @unique @default(uuid())
+  url        String?
+  status     String?   @default("ACTIVE")
+  owner      String?
+  name       String?
+  stars      Int?
+  openIssues Int?
+  license    String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+}
